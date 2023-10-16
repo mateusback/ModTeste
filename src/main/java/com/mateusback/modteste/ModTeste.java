@@ -1,6 +1,9 @@
 package com.mateusback.modteste;
 
+import com.mateusback.modteste.item.ModCreativeModTabs;
+import com.mateusback.modteste.item.ModItems;
 import com.mojang.logging.LogUtils;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -27,6 +30,9 @@ public class ModTeste {
     public ModTeste() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        ModCreativeModTabs.register(modEventBus);
+        ModItems.register(modEventBus);
+
         modEventBus.addListener(this::commonSetup);
 
         MinecraftForge.EVENT_BUS.register(this);
@@ -36,7 +42,7 @@ public class ModTeste {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        // Some common setup code
+
         LOGGER.info("HELLO FROM COMMON SETUP");
 
         if (Config.logDirtBlock)
@@ -49,6 +55,10 @@ public class ModTeste {
 
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
+        if(event.getTabKey() == CreativeModeTabs.INGREDIENTS){
+            event.accept(ModItems.EVIL_MUSHROOM);
+            event.accept(ModItems.COOKED_EVIL_MUSHROOM);
+        }
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "modteste:item/cooked_evil_mushroom"
+  }
+}
